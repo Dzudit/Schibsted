@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './style.scss';
+import './style.css';
 import Container from './contatiners/container.jsx';
 
 class App extends Component {

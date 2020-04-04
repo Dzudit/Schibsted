@@ -1,32 +1,18 @@
-import React, {useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
-import Container from '../contatiners/container.jsx';
 
-const END_POINT = 'http://localhost:6010/articles/'
+const CancelToken = axios.CancelToken;
+let cancel;
 
-Fetch.propsTypes = {
-    url: PropTypes.string 
-}
-
-export default function Fetch({url}) {
-    const [data, setData] = useState(null);
-    useEffect(()=>{
-        let mounted = true;
-        axios.get(END_POINT + url)
-        .then(response => {
-            if(mounted){
-                setData(response.data.articles)
-                console.log("repsonse", response)
-            }
-        })
-        .catch( error =>  console.log("err",error));
-
-        return () => {mounted = false};
-    }, [url]);
-
-    if(!data) {
-        return <span>Loading data...</span>
+export default function fetch(url, endpoint = 'http://localhost:6010/articles/') { //to do: move to env
+    if (cancel !== undefined) {
+      cancel();
     }
-    return  <ListArticles listData={data} />
+    return axios.get(endpoint + url, 
+      {
+        cancelToken: new CancelToken(
+          function executor(c) 
+          {
+              cancel = c;
+          })
+    })
 }

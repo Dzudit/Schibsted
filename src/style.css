@@ -1,0 +1,12 @@
+.container {
+    margin: 6%;
+}
+.sort {
+    color: rgb(248, 58, 89);
+    font-weight: 500;
+    text-decoration: underline;
+}
+.sort:hover {
+    font-weight: 700;
+    cursor: pointer;
+}
